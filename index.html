@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ultimate Birthday Surprise for CHIU 🎂💖! ✨🎉</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-pink: #ff4081;
+            --light-pink: #fce4ec;
+            --accent-green: #81c784;
+            --accent-blue: #64b5f6;
+            --accent-yellow: #ffeb3b;
+            --gold: #ffd700; /* Used for golden outlines */
+            --silver: #c0c0c0;
+            --dark-purple: #2a0a2a; /* Deep background color */
+            --light-purple: #4c0e4c; /* Slightly lighter for gradient */
+
+            /* Specific colors for the card text */
+            --card-heading-cyan: #00FFFF; /* Bright Cyan for the heading */
+            --card-signature-crimson: #DC143C; /* Deep Crimson for the signature */
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            background: radial-gradient(circle at center, var(--light-purple), var(--dark-purple));
+            cursor: default;
+        }
+
+        /* --- Three.js Canvas for 3D Background --- */
+        #three-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            z-index: 1;
+            opacity: 0.9;
+        }
+
+        /* --- Volumetric Light Rays (CSS Overlay) --- */
+        .light-rays-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 2;
+            filter: blur(5px);
+            opacity: 0.7;
+        }
+
+        .light-ray {
+            position: absolute;
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+            width: 300px;
+            height: 150vh;
+            transform-origin: top center;
+            animation: rayMove 30s infinite linear;
+        }
+
+        @keyframes rayMove {
+            0% { transform: translate(-50%, -50%) rotate(0deg); opacity: 0.1; }
+            50% { transform: translate(50%, 50%) rotate(360deg); opacity: 0.2; }
+            100% { transform: translate(-50%, -50%) rotate(720deg); opacity: 0.1; }
+        }
+
+        /* --- Floating Glowing Orbs with Trails --- */
+        .orb-trail-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 3;
+        }
+
+        .glowing-orb-trail {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--orb-color) 0%, transparent 70%);
+            filter: blur(15px);
+            opacity: 0;
+            animation: orbFloatAndTrail 25s infinite ease-in-out;
+            box-shadow: 0 0 30px 10px var(--orb-color);
+        }
+
+        @keyframes orbFloatAndTrail {
+            0% { transform: translate(var(--start-x), var(--start-y)) scale(0.6); opacity: 0; }
+            10% { opacity: 0.8; transform: translate(var(--mid1-x), var(--mid1-y)) scale(1); }
+            90% { opacity: 0.5; transform: translate(var(--mid2-x), var(--mid2-y)) scale(0.9); }
+            100% { opacity: 0; transform: translate(var(--end-x), var(--end-y)) scale(0.7); }
+        }
+
+        /* --- Main Card Container & Entrance Effect --- */
+        .card-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            perspective: 2000px;
+            transform-style: preserve-3d;
+            z-index: 20;
+        }
+
+        .birthday-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.55);
+            padding: 20px;
+            text-align: center;
+            transform-style: preserve-3d;
+            max-width: 60vw;
+            min-width: 350px;
+            cursor: default;
+            transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+            opacity: 0;
+            transform: translateZ(-1000px) rotateY(180deg) scale(0.1);
+            animation: ultimateCardPopIn 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+
+        .birthday-card:hover {
+            transform: translateY(-15px) scale(1.05) rotateX(5deg);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+        }
+
+        @keyframes ultimateCardPopIn {
+            0% { opacity: 0; transform: translateZ(-1000px) rotateY(180deg) scale(0.1); }
+            50% { opacity: 0.8; transform: translateZ(50px) rotateY(-30deg) scale(1.2); }
+            100% { opacity: 1; transform: translateZ(0) rotateY(0deg) scale(1); }
+        }
+
+        .birthday-card h1 {
+            color: var(--primary-pink);
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: scale(0.7) translateY(30px);
+            animation: textPop 1.2s ease-out 2.5s forwards;
+        }
+
+        @keyframes textPop {
+            0% { opacity: 0; transform: scale(0.7) translateY(30px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .birthday-card .main-card-image {
+            max-width: 90%;
+            height: auto;
+            display: block;
+            margin: 15px auto;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            animation: imagePopIn 1.2s ease-out 3.5s forwards;
+        }
+
+        @keyframes imagePopIn {
+            0% { opacity: 0; transform: scale(0.8) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .surprise-button {
+            background: linear-gradient(45deg, var(--primary-pink), #7873f5);
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: buttonPopIn 1s ease-out 5s forwards;
+            text-shadow: 0 0 8px rgba(255,255,255,0.7);
+        }
+
+        .surprise-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 0 15px rgba(255,255,255,0.9), 0 0 25px var(--primary-pink);
+        }
+
+        @keyframes buttonPopIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .birthday-card p.click-prompt {
+            display: none;
+        }
+
+        /* NEW: Emoji rain on main card hover */
+        .emoji-rain-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Allows clicks to pass through */
+            overflow: hidden;
+            z-index: 10; /* Above background, below main card text/button */
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .birthday-card:hover .emoji-rain-container {
+            opacity: 1;
+        }
+
+        .falling-emoji {
+            position: absolute;
+            font-size: 1.5em; /* Slightly smaller emojis */
+            opacity: 0;
+            animation: emojiFall 4s linear forwards; /* Shorter duration for faster fall */
+            transform: translateY(-50px); /* Start above the card */
+        }
+
+        @keyframes emojiFall {
+            0% { transform: translateY(-50px) scale(0.8); opacity: 0; }
+            20% { opacity: 0.9; }
+            100% { transform: translateY(100%) scale(1.2); opacity: 0; } /* Fall off bottom */
+        }
+
+        /* --- Surprise Card Overlay (Confetti on reveal) --- */
+        .surprise-card-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 20;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .surprise-card-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .surprise-card {
+            background: linear-gradient(135deg, #fffafa, #f0e0f0);
+            border-radius: 30px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            text-align: center;
+            max-width: 650px;
+            width: 90%;
+            position: relative;
+            overflow: hidden;
+            transform: scale(0.3) rotateX(120deg);
+            opacity: 0;
+            animation: surprisePopIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 5px solid var(--primary-pink);
+            box-sizing: border-box;
+        }
+
+        .surprise-card-overlay.visible .surprise-card {
+            animation: surprisePopIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes surprisePopIn {
+            0% { transform: scale(0.3) rotateX(120deg); opacity: 0; }
+            70% { transform: scale(1.1) rotateX(-15deg); opacity: 1; }
+            100% { transform: scale(1) rotateX(0deg); opacity: 1; }
+        }
+
+        .surprise-card .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2.2em;
+            color: #aaa;
+            cursor: pointer;
+            transition: color 0.2s ease, transform 0.2s ease;
+            z-index: 10;
+        }
+        .surprise-card .close-btn:hover {
+            color: #666;
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        /* --- UPDATED H2 STYLES (To My Incredible Bestie!) - CYAN with GOLDEN BORDER --- */
+        .surprise-card h2 {
+            color: var(--card-heading-cyan); /* Bright Cyan */
+            font-size: 3.2em;
+            margin-bottom: 25px;
+            text-shadow:
+                /* Golden border effect (sharp outline in all directions) */
+                -1px -1px 0 var(--gold),
+                1px -1px 0 var(--gold),
+                -1px 1px 0 var(--gold),
+                1px 1px 0 var(--gold),
+                /* Main shadow for depth and subtle white glow for shimmer */
+                2px 2px 3px rgba(0, 0, 0, 0.3),
+                0 0 8px rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            transform: translateY(30px) scale(0.8);
+            animation: fadeInScale 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1s forwards;
+            font-family: 'Georgia', serif;
+            letter-spacing: 2px;
+        }
+
+        .surprise-card p {
+            color: #333;
+            font-size: 1.4em;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            background-color: var(--light-pink);
+            padding: 12px 18px;
+            border-radius: 8px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out forwards;
+            max-width: 90%;
+        }
+
+        .surprise-card p:nth-of-type(1) { animation-delay: 1.7s; }
+        .surprise-card p:nth-of-type(2) { animation-delay: 2.2s; }
+
+
+        /* --- UPDATED SIGNATURE STYLES (Simple font) --- */
+        .surprise-card .signature {
+            font-family: 'Georgia', serif; /* Changed to a simpler, classic font */
+            font-style: italic; /* Added for a personal touch */
+            color: var(--card-signature-crimson); /* Deep Crimson */
+            font-size: 1.2em; /* Reduced font size for better fit */
+            margin-top: 25px; /* Adjusted margin for better spacing */
+            text-shadow:
+                /* Golden border effect (sharp outline) - slightly thinner than H2 */
+                -0.7px -0.7px 0 var(--gold),
+                0.7px -0.7px 0 var(--gold),
+                -0.7px 0.7px 0 var(--gold),
+                0.7px 0.7px 0 var(--gold),
+                /* Subtle white glow for added pop */
+                0 0 5px rgba(255, 255, 255, 0.4),
+                /* Main shadow for depth */
+                1px 1px 2px rgba(0, 0, 0, 0.25);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out 2.8s forwards;
+            line-height: 1.5; /* Adjusted for better spacing */
+            background: none; /* Remove background from the main p style */
+            padding: 0; /* Remove padding from the main p style */
+            max-width: 95%; /* Ensures text wraps nicely on small screens */
+            box-sizing: border-box;
+        }
+
+        /* NEW: Style for the name in the signature */
+        .surprise-card .signature .signature-name {
+            display: inline-block; /* Allows for margin-top */
+            font-style: normal; /* Make the name not italic */
+            font-weight: bold; /* Make the name stand out */
+            margin-top: 8px; /* Add space above the name */
+            letter-spacing: 1px; /* Add a bit of spacing */
+        }
+
+
+        /* NEW: Floating Emojis/Elements for Surprise Card (Enhanced) */
+        .floating-element {
+            position: absolute;
+            opacity: 0;
+            font-size: 2.5em;
+            animation: floatAndFade 10s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        /* Specific positions, delays, and colors for emojis */
+        .floating-heart-1 { top: 10%; left: 10%; animation-delay: 1s; color: #ff80ab; }
+        .floating-sparkle-1 { bottom: 15%; right: 12%; animation-delay: 1.5s; font-size: 2.2em; color: #ffd700; }
+        .floating-heart-2 { top: 5%; right: 8%; animation-delay: 2s; color: #ff80ab; font-size: 2.6em; }
+        .floating-sparkle-2 { bottom: 8%; left: 10%; animation-delay: 2.5s; font-size: 2.3em; color: #ffd700; }
+        /* Add more if desired */
+        .floating-balloon { top: 25%; left: 5%; animation-delay: 3s; font-size: 2em; color: #ff69b4; }
+        .floating-cake { bottom: 5%; right: 5%; animation-delay: 3.5s; font-size: 2.1em; color: #e0b0ff; }
+
+
+        .floating-element::before {
+            content: attr(data-emoji);
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+
+        @keyframes fadeInScale {
+            0% { opacity: 0; transform: translateY(30px) scale(0.8); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        @keyframes fadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes floatAndFade {
+            0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+            20% { opacity: 0.9; }
+            100% { opacity: 0; transform: translate(var(--float-x), var(--float-y)) scale(1.5); }
+        }
+
+        /* Define float paths for emojis within the surprise card - these values are in px for transform */
+        .floating-heart-1 { --float-x: 60px; --float-y: -150px; }
+        .floating-sparkle-1 { --float-x: -80px; --float-y: -180px; }
+        .floating-heart-2 { --float-x: -70px; --float-y: -140px; }
+        .floating-sparkle-2 { --float-x: 90px; --float-y: -160px; }
+        .floating-balloon { --float-x: -40px; --float-y: -100px; }
+        .floating-cake { --float-x: 50px; --float-y: -110px; }
+
+
+        /* --- Confetti Canvas (from library) --- */
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 18;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="three-canvas"></canvas>
+    <div class="light-rays-container" id="lightRaysContainer"></div>
+    <div class="orb-trail-container" id="orbTrailContainer"></div>
+
+    <div class="card-container">
+        <div class="birthday-card" id="birthdayCard">
+            <div class="emoji-rain-container" id="emojiRainContainer"></div>
+
+            <h1 id="mainCardTitle"></h1>
+            <img src="hbd.jpg" alt="A beautiful photo for Chiu" class="main-card-image">
+            <button class="surprise-button" id="surpriseButton">Click Here for Surprise ✨🎉</button>
+            <p class="click-prompt" id="clickPrompt"></p>
+        </div>
+    </div>
+
+    <div class="surprise-card-overlay" id="surpriseCardOverlay">
+        <div class="surprise-card">
+            <span class="close-btn" id="closeSurprise">&times;</span>
+            <h2>To My Ice Cream!</h2>
+            <p>On your special day, I wish you all the joy, love, and happiness your heart can hold.
+            Your warmth, strength, and kindness inspire me more than you know, and I’m truly grateful to have you in my life.</p>
+            <p>"Thank you for always bringing your incredible self to every chat and shared moment. I'm truly hoping this year brings you immense happiness, exciting new paths, and maybe even a chance for us to share some of those joys and laughs in person!"</p>
+            
+            <p class="signature">With all greatest wishes and warmest hugs,<br>
+                <span class="signature-name">[MEET]</span>
+            </p>
+
+            <span class="floating-element floating-heart-1" data-emoji="💖"></span>
+            <span class="floating-element floating-sparkle-1" data-emoji="✨"></span>
+            <span class="floating-element floating-heart-2" data-emoji="💕"></span>
+            <span class="floating-element floating-sparkle-2" data-emoji="🌟"></span>
+            <span class="floating-element floating-balloon" data-emoji="🎈"></span>
+            <span class="floating-element floating-cake" data-emoji="🎂"></span>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+    <script>
+        // --- JavaScript for Ultimate Effects and Interaction ---
+
+        const birthdayCard = document.getElementById('birthdayCard');
+        const mainCardTitle = document.getElementById('mainCardTitle');
+        const mainCardImage = document.querySelector('.main-card-image');
+        const clickPrompt = document.getElementById('clickPrompt'); // This will effectively be hidden
+        const surpriseButton = document.getElementById('surpriseButton'); // Get the new button
+        const surpriseCardOverlay = document.getElementById('surpriseCardOverlay');
+        const closeSurpriseBtn = document.getElementById('closeSurprise');
+        const lightRaysContainer = document.getElementById('lightRaysContainer');
+        const orbTrailContainer = document.getElementById('orbTrailContainer');
+        const emojiRainContainer = document.getElementById('emojiRainContainer'); // NEW: Get emoji rain container
+
+        const herName = "CHIU"; // Don't forget to replace this!
+        const yourName = "MEET"; // Don't forget to replace this!
+
+        // --- Three.js 3D Background Setup ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('three-canvas'), antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+
+        // Add ambient light (optional, for general scene illumination)
+        // scene.add(new THREE.AmbientLight(0x404040));
+
+        // Create particles (millions of them!)
+        const particleCount = 200000; // More particles for extreme effect
+        const geometry = new THREE.BufferGeometry();
+        const positions = [];
+        const colors = [];
+        const sizes = [];
+
+        // Define colors for particles (complementary to the overall theme)
+        const particleColorPalette = [
+            new THREE.Color(0xff69b4), // Hot pink
+            new THREE.Color(0xffa500), // Orange
+            new THREE.Color(0x8a2be2), // Blue Violet
+            new THREE.Color(0x00ffff), // Cyan
+            new THREE.Color(0xffd700)  // Gold
+        ];
+
+        for (let i = 0; i < particleCount; i++) {
+            // Random positions within a large cube
+            positions.push((Math.random() - 0.5) * 2000,
+                           (Math.random() - 0.5) * 2000,
+                           (Math.random() - 0.5) * 2000);
+
+            // Random color from palette
+            const color = particleColorPalette[Math.floor(Math.random() * particleColorPalette.length)];
+            colors.push(color.r, color.g, color.b);
+
+            sizes.push(Math.random() * 5 + 1); // Random size between 1 and 6
+        }
+
+        geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+        geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+        geometry.setAttribute('size', new THREE.Float32BufferAttribute(sizes, 1));
+
+        // Shader material for custom particle rendering (glow, variable size)
+        const particleMaterial = new THREE.ShaderMaterial({
+            uniforms: {
+                pointTexture: { value: new THREE.TextureLoader().load('https://threejs.org/examples/textures/sprites/disc.png') }, // A simple disc texture
+                time: { value: 0 }
+            },
+            vertexShader: `
+                attribute float size;
+                attribute vec3 color;
+                varying vec3 vColor;
+                uniform float time;
+
+                void main() {
+                    vColor = color;
+                    vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                    gl_PointSize = size * (300.0 / -mvPosition.z) * (sin(time + position.x * 0.01) * 0.5 + 0.5); // Add subtle pulsation
+                    gl_Position = projectionMatrix * mvPosition;
+                }
+            `,
+            fragmentShader: `
+                uniform sampler2D pointTexture;
+                varying vec3 vColor;
+                void main() {
+                    gl_FragColor = vec4(vColor, 1.0) * texture2D(pointTexture, gl_PointCoord);
+                }
+            `,
+            blending: THREE.AdditiveBlending, // For glowing effect
+            depthTest: false,
+            transparent: true
+        });
+
+        const particles = new THREE.Points(geometry, particleMaterial);
+        scene.add(particles);
+
+        camera.position.z = 100;
+
+        let mouseX = 0;
+        let mouseY = 0;
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        function animateThreeJS() {
+            requestAnimationFrame(animateThreeJS);
+
+            // Camera movement based on mouse
+            camera.position.x += (mouseX * 50 - camera.position.x) * 0.05;
+            camera.position.y += (mouseY * 50 - camera.position.y) * 0.05;
+            camera.lookAt(scene.position);
+
+            // Rotate particles slowly
+            particles.rotation.x += 0.0001;
+            particles.rotation.y += 0.0002;
+
+            // Update time uniform for pulsating effect
+            particleMaterial.uniforms.time.value = performance.now() / 1000;
+
+            renderer.render(scene, camera);
+        }
+        animateThreeJS();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // --- Volumetric Light Rays (CSS) ---
+        const numRays = 8;
+        function createLightRay() {
+            const ray = document.createElement('div');
+            ray.classList.add('light-ray');
+            ray.style.left = `${Math.random() * 100}vw`;
+            ray.style.animationDuration = `${25 + Math.random() * 10}s`;
+            ray.style.animationDelay = `${Math.random() * 10}s`;
+            lightRaysContainer.appendChild(ray);
+
+            ray.addEventListener('animationend', () => ray.remove()); // Remove to prevent accumulation
+        }
+        for (let i = 0; i < numRays; i++) {
+            createLightRay();
+        }
+        setInterval(createLightRay, 5000); // Continuously add new rays
+
+
+        // --- Floating Glowing Orbs with Trails ---
+        const numOrbs = 8;
+        const orbColors = ['#ff69b4', '#81c784', '#64b5f6', '#ffeb3b', '#e0b0ff'];
+
+        function createGlowingOrbTrail() {
+            const orb = document.createElement('div');
+            orb.classList.add('glowing-orb-trail');
+            orb.style.setProperty('--orb-color', orbColors[Math.floor(Math.random() * orbColors.length)]);
+            orb.style.setProperty('--start-x', `${Math.random() * 100}vw`);
+            orb.style.setProperty('--start-y', `${Math.random() * 100}vh`);
+            orb.style.setProperty('--mid1-x', `${Math.random() * 100}vw`);
+            orb.style.setProperty('--mid1-y', `${Math.random() * 100}vh`);
+            orb.style.setProperty('--mid2-x', `${Math.random() * 100}vw`);
+            orb.style.setProperty('--mid2-y', `${Math.random() * 100}vh`);
+            orb.style.setProperty('--end-x', `${Math.random() * 100}vw`);
+            orb.style.setProperty('--end-y', `${Math.random() * 100}vh`);
+
+            const duration = 20 + Math.random() * 10;
+            const delay = Math.random() * 10;
+            orb.style.animationDuration = `${duration}s`;
+            orb.style.animationDelay = `${delay}s`;
+            orbTrailContainer.appendChild(orb);
+
+            orb.addEventListener('animationend', () => orb.remove());
+        }
+        for (let i = 0; i < numOrbs; i++) {
+            createGlowingOrbTrail();
+        }
+        setInterval(createGlowingOrbTrail, 4000); // Add new orbs periodically
+
+        // NEW: Emoji rain on main card hover
+        const emojisToRain = ['💖', '✨', '🎉', '🌟', '🥳']; // Emojis to fall
+
+        function createFallingEmoji() {
+            const emoji = document.createElement('span');
+            emoji.classList.add('falling-emoji');
+            emoji.textContent = emojisToRain[Math.floor(Math.random() * emojisToRain.length)];
+            emoji.style.left = `${Math.random() * 100}%`; // Random horizontal position
+            emoji.style.animationDuration = `${3 + Math.random() * 2}s`; // Vary speed
+            emoji.style.animationDelay = `${Math.random() * 0.5}s`; // Stagger appearance
+            emojiRainContainer.appendChild(emoji);
+
+            emoji.addEventListener('animationend', () => emoji.remove()); // Clean up
+        }
+
+        let emojiInterval;
+        birthdayCard.addEventListener('mouseenter', () => {
+            // Start creating emojis rapidly when mouse enters
+            emojiInterval = setInterval(createFallingEmoji, 100); // New emoji every 100ms
+        });
+
+        birthdayCard.addEventListener('mouseleave', () => {
+            // Stop creating emojis when mouse leaves
+            clearInterval(emojiInterval);
+            // Optionally fade out existing emojis faster
+            document.querySelectorAll('.falling-emoji').forEach(emoji => {
+                emoji.style.opacity = 0;
+                emoji.style.transition = 'opacity 1s ease-out';
+            });
+        });
+
+        // --- Card Entrance & Text Staging ---
+        birthdayCard.addEventListener('animationend', (event) => {
+            if (event.animationName === 'ultimateCardPopIn') {
+                mainCardTitle.textContent = `Happy Birthday, 🎂💖!`;
+                // The H1's 'textPop' CSS animation handles its reveal
+            }
+        });
+
+        // Use a combined approach with a single setTimeout for overall sequencing
+        setTimeout(() => {
+            mainCardTitle.textContent = `Happy Birthday, CHIU 🎂💖!`; // Ensure title is set
+            // The CSS animations already handle the opacity and transform for h1, image, and button
+            // The old click prompt is now hidden by CSS
+            birthdayCard.style.cursor = 'default'; // Card itself is not clickable anymore
+        }, 2800); // This delay aligns with the h1's animation start in CSS
+
+        // --- New Button Click for Surprise (with Confetti & Sparkles) ---
+        surpriseButton.addEventListener('click', () => {
+            surpriseCardOverlay.classList.add('visible');
+
+            setTimeout(() => {
+                // Main Confetti Burst
+                confetti({
+                    particleCount: 300,
+                    spread: 150,
+                    origin: { y: 0.5, x: 0.5 },
+                    scalar: 1.8,
+                    colors: ['#ff4081', '#fce4ec', '#81c784', '#64b5f6', '#ffeb3b', '#ffd700', '#ffffff'] // Add white for extra sparkle
+                });
+
+                // Side bursts for fuller effect
+                confetti({
+                    particleCount: 100,
+                    spread: 60,
+                    origin: { y: 0.6, x: 0.2 },
+                    scalar: 1.2,
+                    colors: ['#ff4081', '#ffeb3b']
+                });
+                confetti({
+                    particleCount: 100,
+                    spread: 60,
+                    origin: { y: 0.6, x: 0.8 },
+                    scalar: 1.2,
+                    colors: ['#64b5f6', '#81c784']
+                });
+
+
+                // Persistent Sparkle Rain (similar to previous version's confetti rain, but for sparkles)
+                const duration = 5 * 1000;
+                const animationEnd = Date.now() + duration;
+                const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+                function randomInRange(min, max) {
+                    return Math.random() * (max - min) + min;
+                }
+
+                const interval = setInterval(function() {
+                    const timeLeft = animationEnd - Date.now();
+
+                    if (timeLeft <= 0) {
+                        return clearInterval(interval);
+                    }
+
+                    const particleCount = 70 * (timeLeft / duration);
+                    confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.9), y: Math.random() - 0.2 },
+                        colors: ['#ffeb3b', '#ffd700', '#ffffff', '#e0b0ff'] // Sparkle colors
+                    }));
+                }, 150);
+            }, 400); // Delay for confetti after surprise card animation starts
+        });
+
+        // --- Close Surprise Card ---
+        closeSurpriseBtn.addEventListener('click', () => {
+            surpriseCardOverlay.classList.remove('visible');
+
+            // NEW: Confetti burst on close
+            confetti({
+                particleCount: 80, // Smaller burst
+                spread: 100,
+                origin: { y: 0.5, x: 0.5 }, // Centered
+                scalar: 1.0,
+                colors: ['#ff4081', '#fce4ec', '#81c784', '#64b5f6', '#ffeb3b', '#ffd700', '#ffffff']
+            });
+        });
+    </script>
+</body>
+</html>
